@@ -22,7 +22,6 @@ function timerTextContentCheck(){
     else timeEl.textContent = `15:00`;
 }
 
-// timeEl.innerHTML = `<p style="font-size: 1.5rem;">Select an option</p>`;
 timeEl.textContent = '25:00';
 
 startTimer('pomodoro');
