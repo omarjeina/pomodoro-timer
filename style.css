@@ -38,6 +38,7 @@ main{
 
 .column-container:hover{
     text-decoration: underline;
+    cursor: default;
 }
 
 .active{
@@ -84,4 +85,10 @@ main{
 
 .after-start{
     display: none;
+}
+
+.message{
+    display: none;
+    position: absolute;
+    top: 1em;
 }
