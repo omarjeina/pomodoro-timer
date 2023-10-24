@@ -1,6 +1,7 @@
 const timeEl = document.querySelector("#time");
 const startButton = document.querySelector("#start");
 const pauseButton = document.querySelector("#pause");
+const resumeButton = document.querySelector("#resume");
 const endButton = document.querySelector("#end");
 
 const pomodoroEl = document.querySelector("#pomodoro");
@@ -16,6 +17,10 @@ const longTime = 15 * 60;
 
 let timer = pomodoroTime;
 
+let pauseTemp = timer;
+
+let temp = timer - 1;
+
 function timerTextContentCheck(){
     if(timer == pomodoroTime) timeEl.textContent = `25:00`;
     else if(timer == shortTime) timeEl.textContent = `05:00`;
@@ -24,15 +29,13 @@ function timerTextContentCheck(){
 
 timeEl.textContent = '25:00';
 
-startTimer('pomodoro');
-
 pomodoroEl.addEventListener('click', () => {
     pomodoroEl.classList.add("active");
     shortEl.classList.remove("active");
     longEl.classList.remove("active");
     timer = pomodoroTime;
+    temp = timer;
     timerTextContentCheck();
-    startTimer('pomodoro');
 });
 
 shortEl.addEventListener('click', () => {
@@ -40,8 +43,8 @@ shortEl.addEventListener('click', () => {
     shortEl.classList.add("active");
     longEl.classList.remove("active");
     timer = shortTime;
+    temp = timer;
     timerTextContentCheck();
-    startTimer('short');
 });
 
 longEl.addEventListener('click', () => {
@@ -49,87 +52,93 @@ longEl.addEventListener('click', () => {
     shortEl.classList.remove("active");
     longEl.classList.add("active");
     timer = longTime;
+    temp = timer;
     timerTextContentCheck();
-    startTimer('long');
 });
 
-function startTimer(timerName){
+startButton.addEventListener('click', () => {
+    temp = timer;
+    startTimer();
+});
 
 
-    startButton.addEventListener('click', () => {
-
-        messageEl.style.display = 'block';
-
-        shortEl.style.pointerEvents = 'none';
-        longEl.style.pointerEvents = 'none';
-        pomodoroEl.style.pointerEvents = 'none';
-
-        startButton.style.display = "none";
-        pauseButton.style.display = "block";
-        endButton.style.display = "block";
-    
-        let temp = timer
-    
-        const countdownTimer = setInterval(() => { 
-    
-            function endTimer(){
-                clearInterval(countdownTimer);
-                temp = timer;
-                countdown(temp);
-            
-            
-                startButton.style.display = "block";
-                pauseButton.style.display = "none";
-                endButton.style.display = "none";
-
-                shortEl.style.pointerEvents = 'auto';
-                longEl.style.pointerEvents = 'auto';
-                pomodoroEl.style.pointerEvents = 'auto';
-
-                messageEl.style.display = 'none';
-            }
-    
-            temp--;
+function pauseTimer(timerName, timerTime){
+            clearInterval(timerName);
+            temp = timerTime;
             countdown(temp);
-    
-            if(temp == -1){
-                endTimer();
-            }
-    
-            endButton.addEventListener('click', () => {
-                endTimer();
-            });
-    
-            }, 1000);
-        
-        function countdown(duration){
-        
-            let minutes = Math.floor(duration / 60);
-            let seconds = duration % 60;
-        
-            minutes = minutes < 10 ? `0${minutes}` : minutes;
-            seconds = seconds < 10 ? `0${seconds}` : seconds;
-        
-            timeEl.textContent = `${minutes}:${seconds}`;
+}
 
-            document.title = `${minutes}:${seconds}`;
-        
+function startTimer(){
+
+    const startTimerVar = setInterval(() => {
+
+        afterStartButtons()
+
+        temp--;
+        countdown(temp)
+
+        if(temp == -1){
+            pauseTimer(startTimerVar, timer);
+            backToNormal();
         }
-    });
+
+        endButton.addEventListener('click', () => {
+            pauseTimer(startTimerVar, timer);
+            backToNormal();
+        });
+
+        pauseButton.addEventListener('click', () => {
+            pauseTimer(startTimerVar, temp); 
+            pauseButton.style.display = 'none';   
+            resumeButton.style.display = 'block';   
+        });
+
+    }, 1000)
+}
+
+resumeButton.addEventListener('click', () => {
+    pauseButton.style.display = 'display';   
+    resumeButton.style.display = 'none';   
+    startTimer();
+});
+
+
+function countdown(duration){
+        
+    let minutes = Math.floor(duration / 60);
+    let seconds = duration % 60;
+
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    timeEl.textContent = `${minutes}:${seconds}`;
+
+    document.title = `${minutes}:${seconds}`;
+
 }
 
 
+function afterStartButtons(){
+    messageEl.style.display = 'block';
+    
+    shortEl.style.pointerEvents = 'none';
+    longEl.style.pointerEvents = 'none';
+    pomodoroEl.style.pointerEvents = 'none';
+    startButton.style.display = "none";
+    pauseButton.style.display = "block";
+    endButton.style.display = "block";
+}
 
 
-function endTimer(){
-    clearInterval(countdownTimer);
-    pomodoro = pomodoroTime;
-    countdown(pomodoro);
-
-
+function backToNormal(){
     startButton.style.display = "block";
     pauseButton.style.display = "none";
     endButton.style.display = "none";
-}
 
+    shortEl.style.pointerEvents = 'auto';
+    longEl.style.pointerEvents = 'auto';
+    pomodoroEl.style.pointerEvents = 'auto';
+
+    messageEl.style.display = 'none';
+}
 

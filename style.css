@@ -75,11 +75,11 @@ main{
     background-color: rgb(233, 41, 41);
 }
 
-#pause{
+#pause, #resume{
     background-color: rgb(26, 113, 205);
 }
 
-#pause:hover{
+#pause:hover, #resume:hover{
     background-color: rgb(49, 137, 231);
 }
 
