@@ -11,6 +11,7 @@ const longEl = document.querySelector("#long");
 const messageEl = document.querySelector("#message");
 
 
+
 const pomodoroTime = 25 * 60;
 const shortTime = 5 * 60;
 const longTime = 15 * 60;
