@@ -3,14 +3,34 @@ const startButton = document.querySelector("#start");
 const pauseButton = document.querySelector("#pause");
 const resumeButton = document.querySelector("#resume");
 const endButton = document.querySelector("#end");
+const editButton = document.querySelector("#edit");
+const confirmButton = document.querySelector("#confirm");
 
 const pomodoroEl = document.querySelector("#pomodoro");
 const shortEl = document.querySelector("#short");
 const longEl = document.querySelector("#long");
 
+function editCheck(check){
+    if(!check){
+        editButton.style.display = 'block';
+        confirmButton.style.display = 'block';
+    } else{
+        editButton.style.display = 'none';
+        confirmButton.style.display = 'none';
+    }
+}
+
+editButton.addEventListener('click', () => {
+    confirmButton.style.display =  'block';
+    editButton.style.display = 'none';
+});
+
+confirmButton.addEventListener('click', () => {
+    confirmButton.style.display =  'none';
+    editButton.style.display = 'block';
+});
+
 const messageEl = document.querySelector("#message");
-
-
 
 const pomodoroTime = 25 * 60;
 const shortTime = 5 * 60;
@@ -37,6 +57,7 @@ pomodoroEl.addEventListener('click', () => {
     timer = pomodoroTime;
     temp = timer;
     timerTextContentCheck();
+    editCheck(false);
 });
 
 shortEl.addEventListener('click', () => {
@@ -46,6 +67,7 @@ shortEl.addEventListener('click', () => {
     timer = shortTime;
     temp = timer;
     timerTextContentCheck();
+    editCheck(true);
 });
 
 longEl.addEventListener('click', () => {
@@ -55,6 +77,7 @@ longEl.addEventListener('click', () => {
     timer = longTime;
     temp = timer;
     timerTextContentCheck();
+    editCheck(true);
 });
 
 startButton.addEventListener('click', () => {
