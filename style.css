@@ -62,6 +62,10 @@ main{
     cursor: pointer;
 }
 
+.edit:hover{
+    background: rgb(56, 56, 56);
+}
+
 .edit path{
     fill: white;
 }
@@ -69,6 +73,20 @@ main{
 #confirm{
     display: none;
     background: green;
+}
+
+.edit-time{
+    display: none;
+    font-size: 5rem;
+    width: 160px;
+    border: 0;
+    border-radius: 5px;
+    padding: .05em .15em;
+    background-color: rgb(241, 241, 241);
+}
+
+.edit-time::placeholder{
+    font-size: 1.5rem;
 }
 
 .button-container{
@@ -126,5 +144,9 @@ main{
     }
     .time-container{
         font-size: 4rem;
+    }
+    .edit-time{
+        font-size: 4rem;
+        width: 110px;
     }
 }
