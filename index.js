@@ -22,7 +22,7 @@ let timer = pomodoroTime;
 
 let pauseTemp = timer;
 
-let temp = timer - 1;
+let temp = timer;
 
 function editCheck(check){
     if(!check){
@@ -118,7 +118,7 @@ longEl.addEventListener('click', () => {
 
 startButton.addEventListener('click', () => {
     editCheck(true);
-    temp = timer;
+    temp = timer + 1;
     if(shortEl.classList.contains("active") || longEl.classList.contains("active")){
         startTimer(true);
     } else{
@@ -141,16 +141,14 @@ function editCheckTab(tab){
     }
 }
 
-function startTimer(tab){
 
+function startTimer(tab) {
     const startTimerVar = setInterval(() => {
-
-        afterStartButtons()
-
+        afterStartButtons();
         temp--;
-        countdown(temp)
+        countdown(temp);
 
-        if(temp == -1){
+        if (temp === -1) {
             pauseTimer(startTimerVar, timer);
             backToNormal();
         }
@@ -162,18 +160,30 @@ function startTimer(tab){
         });
 
         pauseButton.addEventListener('click', () => {
-            pauseTimer(startTimerVar, temp); 
-            pauseButton.style.display = 'none';   
-            resumeButton.style.display = 'block';   
+            pauseTimer(startTimerVar, temp);
+            pauseButton.style.display = 'none';
+            resumeButton.style.display = 'block';
         });
 
-    }, 1000)
+    }, 1000);
+
+    // Execute the timer logic immediately upon starting
+    afterStartButtons();
+    temp--;
+    countdown(temp);
+
+    if (temp === -1) {
+        pauseTimer(startTimerVar, timer);
+        backToNormal();
+    }
 }
 
+
+
 resumeButton.addEventListener('click', () => {
+    startTimer(true);
     pauseButton.style.display = 'display';   
     resumeButton.style.display = 'none';   
-    startTimer(true);
 });
 
 
