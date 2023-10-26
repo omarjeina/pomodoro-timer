@@ -79,7 +79,6 @@ main{
     display: none;
     font-size: 5rem;
     width: 160px;
-    border: 0;
     border-radius: 5px;
     padding: .05em .15em;
     background-color: rgb(241, 241, 241);
