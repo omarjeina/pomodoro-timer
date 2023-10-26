@@ -151,6 +151,7 @@ function startTimer(tab) {
         if (temp === -1) {
             pauseTimer(startTimerVar, timer);
             backToNormal();
+            editCheckTab(tab);
         }
 
         endButton.addEventListener('click', () => {
@@ -167,15 +168,10 @@ function startTimer(tab) {
 
     }, 1000);
 
-    // Execute the timer logic immediately upon starting
     afterStartButtons();
     temp--;
     countdown(temp);
 
-    if (temp === -1) {
-        pauseTimer(startTimerVar, timer);
-        backToNormal();
-    }
 }
 
 
